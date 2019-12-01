@@ -1,0 +1,16 @@
+.background-image {
+  width: 200px;
+  height: 100px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #000;
+  background-position: 50% 50%;
+
+  &.bg--empty {
+    background: #FFF;
+    i {
+      font-size: 40px;
+      line-height: 100px;
+    }
+  }
+}

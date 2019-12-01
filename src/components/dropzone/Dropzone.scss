@@ -1,0 +1,22 @@
+.dropzone {
+  cursor: pointer;  
+  height: 140px;
+  border: 3px dashed $gray-input;
+  color: $gray-input;
+  text-align: center;
+  background-position: 50% 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  border-radius: 2px;
+
+  &.dropzone--filled {
+    background-color: #000;
+    border-color: #282929;
+  }
+
+  i {
+    font-size: 80px;
+    line-height: 130px;  
+  }
+}

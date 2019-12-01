@@ -1,0 +1,33 @@
+.table--container{
+
+  table{
+    width: 100%;
+  
+    tbody tr:nth-child(odd) {
+      background-color: $gray-light;
+    }
+  
+     thead{
+      font-weight: 100;
+      tr th:last-child {
+        background: $gray;
+      }
+    }
+    th{
+      padding: 10px 0;
+    }
+    td {
+      text-align: center;
+    }
+    .chk-box{
+      width: 20px;
+    }
+  }
+}
+
+.table--pagination {
+  text-align: center;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
