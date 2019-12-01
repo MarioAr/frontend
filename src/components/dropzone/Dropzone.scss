@@ -1,4 +1,4 @@
-.dropzone {
+.dropzone { 
   cursor: pointer;  
   height: 140px;
   border: 3px dashed $gray-input;
@@ -18,5 +18,10 @@
   i {
     font-size: 80px;
     line-height: 130px;  
+  }
+
+  img {
+    height: 150px;
+    width: auto;
   }
 }

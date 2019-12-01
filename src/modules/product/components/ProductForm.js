@@ -1,18 +1,29 @@
 import React, { Component } from 'react';
 import isEmpty from 'lodash/isEmpty';
-
+import { connect } from 'react-redux';
+import { products } from 'modules/redux/actions/';
+import { generateId } from '../helper';
 import { Grid } from 'components/grid';
 import { Dropzone } from 'components/dropzone';
 import { InputGroup, Editor, InputGroupCurrencyIcon } from 'components/input';
 import { Button } from 'components/button';
+// import { Pagination } from './pagination/';
 
 class ProductForm extends Component {
+  constructor(props) {
+    super(props);
+    this.save = this.save.bind(this);
+    this.update = this.update.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+    this.dropImage = this.dropImage.bind(this);
+  }
+
   state = {
     inputValidation: {
-      name: false,
-      description: false,
-      price: false,
-      stock: false
+      name: !false,
+      description: !false,
+      price: !false,
+      stock: !false
     },
     images: [],
     name: '',
@@ -59,31 +70,89 @@ class ProductForm extends Component {
 
   get renderActionButtons() {
     const { id } = this.state;
+	    
+    const CancelBtn =() => <Button size="small" onClick={this.backToListing} className="ml--lg" outline>CANCEL</Button>;
+    const AcceptBtn = props => <Button size="small" onClick={props.onClick}>{props.label}</Button>
+
     if(id) {
       return (
         <React.Fragment>
-          <Button size="small">SAVE UPDATES</Button>
-          <Button size="small" type="danger" className="ml--lg">REMOVE</Button>
+          {/* <Button size="small">SAVE UPDATES</Button> */}
+          <AcceptBtn label="SAVE UPDATES" onClick={this.update} />
+          <Button size="small" type="danger" className="ml--lg" onClick={() => {this.onDelete(id)}}>REMOVE</Button>
           <Button size="small" onClick={this.backToListing} className="ml--lg" outline>CANCEL</Button>
+          {/* <CancelBtn /> */}
         </React.Fragment>
       )
     } else {
       return (
         <React.Fragment>
-          <Button size="small">SAVE PRODUCT</Button>
-          <Button size="small" className="ml--lg" outline>CANCEL</Button>
+          {/* <Button size="small">SAVE PRODUCT</Button> */}
+          <AcceptBtn label="SAVE PRODUCT" onClick={this.save} />
+
+          {/* <Button size="small" className="ml--lg" outline>CANCEL</Button> */}
+          <CancelBtn />
         </React.Fragment>
       )
     }
   }
   
-  componentDidMount() {
-    const { params } = this.props.match;
+  save() {
+    let prod = {id: generateId(), ...this.state}
+    delete prod.inputValidation;
+    this.props.dispatch(products.setProduct(prod))
   }
 
+  update() {
+    let prod = {...this.state}
+    delete prod.inputValidation;
+
+    this.props.dispatch(products.updateProduct(prod))
+  }
+
+  onDelete = (id) => {
+    console.log(id)
+    this.props.dispatch(products.deleteProduct(id));
+	  this.props.history.push('/products');
+  }
+  componentWillUnmount() {
+      //  this.props.dispatch(products.reset())
+	  
+  }
+  
+  componentDidMount() {
+    const { params } = this.props.match;
+    // const { state } = this.props.location;
+    const id = params.id;
+    
+
+    if (id) {
+       this.props.dispatch(products.getProduct(id))
+	  
+	  this.setState((state, props) => ({
+		  ...props.edit
+	  }));	  
+    }
+  }
+
+  dropImage(e) {
+    
+    let file = e[0]
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => this.setState({images: [...this.state.images, reader.result]});
+    reader.onerror = error => console.log(error);
+  }
   render() {
     const { id, description, name, price, stock, promotionalPrice, images, inputValidation } = this.state;
-
+    
+	if (this.props.error) {
+		alert("Ops!");
+	}
+	
+	if (this.props.edited) {
+		alert('Edited!');
+	}
     return (
       <div>
         <Grid transparent className='image--selection'>
@@ -126,11 +195,13 @@ class ProductForm extends Component {
         </Grid>
 
         <Grid transparent nopadding className="mt--lg">
-          {this.renderActionButtons}
+          {this.renderActionButtons}Pagination
         </Grid>
       </div>
     )
   }
 }
 
-export default ProductForm;
+export default connect(
+  state => state.products
+)(ProductForm);

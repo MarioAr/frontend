@@ -9,7 +9,7 @@ class Logged extends Component {
       <div className="container">
         <Sidebar>
           <ul>
-            <ListItemLink to="/products" icon="list">Products listing</ListItemLink>
+            <ListItemLink to="/products" icon="list">Products listing!</ListItemLink>
             <ListItemLink to="/products/new" icon="add">Prodct add</ListItemLink>
           </ul>
         </Sidebar>
