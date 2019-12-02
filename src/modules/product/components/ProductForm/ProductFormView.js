@@ -81,7 +81,6 @@ class ProductForm extends Component {
         // console.log('update', this.state)
         let prod = { ...this.state }
 
-
         delete prod.inputValidation;
         
         this.props.onUpdate(prod)
@@ -126,7 +125,7 @@ class ProductForm extends Component {
     }
 
     dropImage = e => {
-        // console.log(this.state)
+        
         let file = e[0]
         const reader = new FileReader();
         reader.readAsDataURL(file);

@@ -11,6 +11,7 @@ class ProductItem extends Component {
     render() {
         
         const {index, item, image, onDelete} = this.props;
+        
         return (
             <tr >
                 <td>

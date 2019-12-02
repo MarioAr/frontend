@@ -48,7 +48,7 @@ class ProductList extends Component {
 		return (
 			<div>
 				<ProductListView products={productsPagination} onDelete={this.onDelete} />
-				{products.length > 0 && <Pagination items={8} />}
+				{products.length > 0 && <Pagination items={4} />}
 			</div>
 		)
 	}

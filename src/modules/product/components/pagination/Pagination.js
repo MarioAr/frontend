@@ -20,7 +20,7 @@ class Pagination extends Component {
         
     }
 
-    maxPages = () => {
+    maxPages = () => { // borrar
         
         const { products, items } = this.props;
         

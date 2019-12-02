@@ -64,9 +64,9 @@ function deleteProduct(id) {
     try {
         let products = getProducts();
         
-        // let productsReduce = products.reduce(product => product.id != id);
+        // let productsReduce = products.filter(product => product.id != id);
         let productsReduce = products.filter(product => {
-            // console.log(product, id)
+            
             return product.id !== id;
         });
 
