@@ -7,12 +7,13 @@ import { InputGroup, Editor, InputGroupCurrencyIcon } from 'components/input';
 import { Button } from 'components/button';
 
 class ProductForm extends Component {
+    
     state = {
         inputValidation: {
-            name: !false,
-            description: !false,
-            price: !false,
-            stock: !false
+            name: false,
+            description: false,
+            price: false,
+            stock: false
         },
         images: [],
         name: '',
@@ -22,6 +23,7 @@ class ProductForm extends Component {
         stock: ''
     };
 
+    
     inputChange = e => {
         const { value, name } = e.target;
         this.onChange(name, value);
@@ -31,10 +33,12 @@ class ProductForm extends Component {
         const state = this.state;
         state[name] = value;
         this.setState(state);
+        // this.validateForm();
     }
 
     backToListing = () => {
-        this.props.history.push('/products')
+
+        this.props.backToListing()
     }
 
     validateForm() {
@@ -57,26 +61,51 @@ class ProductForm extends Component {
         return validate;
     }
 
+    onSave = () => {
+        
+        if (!this.validateForm()) {
+            return alert("Invalid form!")
+        }
+        let prod = { ...this.state }
+
+        delete prod.inputValidation;
+        this.props.onSave(prod)
+    }
+
+    onDelete = id => {
+        // console.log('delete', id)
+        this.props.onDelete(id);
+    }
+
+    onUpdate = () => {
+        // console.log('update', this.state)
+        let prod = { ...this.state }
+
+
+        delete prod.inputValidation;
+        
+        this.props.onUpdate(prod)
+    }
     get renderActionButtons() {
         const { id } = this.state;
         const CancelBtn = () => <Button size="small" onClick={this.backToListing} className="ml--lg" outline>CANCEL</Button>;
-        const AcceptBtn = props => <Button size="small">{props.label}</Button>
+        const AcceptBtn = props => <Button size="small" onClick={props.onClick}>{props.label}</Button>
 
         if (id) {
             return (
                 <React.Fragment>
                     {/* <Button size="small">SAVE UPDATES</Button> */}
-                    <AcceptBtn label="SAVE UPDATES" />
-                    <Button size="small" type="danger" className="ml--lg">REMOVE</Button>
-                    <Button size="small" onClick={this.backToListing} className="ml--lg" outline>CANCEL</Button>
-                    {/* <CancelBtn /> */}
+                    <AcceptBtn label="SAVE UPDATES" onClick={this.onUpdate} />
+                    <Button size="small" type="danger" className="ml--lg" onClick={() => { this.onDelete(id) }}>REMOVE</Button>
+                    {/* <Button size="small" onClick={this.backToListing} className="ml--lg" outline>CANCEL</Button> */}
+                    <CancelBtn />
                 </React.Fragment>
             )
         } else {
             return (
                 <React.Fragment>
                     {/* <Button size="small">SAVE PRODUCT</Button> */}
-                    <AcceptBtn label="SAVE PRODUCT" />
+                    <AcceptBtn label="SAVE PRODUCT" onClick={this.onSave}  />
 
                     {/* <Button size="small" className="ml--lg" outline>CANCEL</Button> */}
                     <CancelBtn />
@@ -86,11 +115,27 @@ class ProductForm extends Component {
     }
 
     componentDidMount() {
-        const { params } = this.props.match;
+        
+        const { update } = this.props;
+        
+        if (update) {
+            this.setState((state, props) => ({
+                ...props.edit
+            }));	  
+        }
+    }
+
+    dropImage = e => {
+        // console.log(this.state)
+        let file = e[0]
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => this.setState({ images: [...this.state.images, reader.result] });
+        reader.onerror = error => console.log(error);
     }
 
     render() {
-        const { id, description, name, price, stock, promotionalPrice, images, inputValidation } = this.state;
+        const { description, name, price, stock, promotionalPrice, images, inputValidation } = this.state;
 
         return (
             <div>
@@ -153,7 +198,10 @@ ProductForm.propTypes = {
         description: PropTypes.string,
         promotionalPrice: PropTypes.string,
         price: PropTypes.string,
-        stock: PropTypes.string
+        stock: PropTypes.string,
+        backToListing: PropTypes.func.isRequired,
+        onSave: PropTypes.func.isRequired,
+        onDelete: PropTypes.func.isRequired,
 }
 
 export default ProductForm;

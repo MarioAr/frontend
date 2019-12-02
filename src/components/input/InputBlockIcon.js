@@ -21,7 +21,7 @@ class InputBlockIcon extends Component {
 
   render() {
     const { placeholder, type, onChange, value, className, icon, children, ...props } = this.props;
-    const { name } = this.props;
+    // const { name } = this.props;
     const { focus } = this.state;
     const classComponent = classname(className, {
       'focus': focus

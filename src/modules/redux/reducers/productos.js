@@ -4,6 +4,8 @@ import {
         DELETE_PRODUCT,
         GET_PRODUCT,
         SET_PRODUCTS,
+        SET_PRODUCT,
+        UPDATE_PRODUCTS,
         RESET,
         ERROR,
         SET_PAGINATION_PAGE,
@@ -47,7 +49,9 @@ function productos(state = defaultState, action) {
                 ...state,
                 page: payload.page,
                 maxPages: payload.maxPages,
-                productsPagination: payload.productsPagination
+                productsPagination: payload.productsPagination,
+                products: payload.products,
+                deleted: payload.deleted
             }
         case GET_PRODUCT:
             let product = payload.data;
@@ -78,6 +82,22 @@ function productos(state = defaultState, action) {
 
             }
 
+        // case SET_PRODUCT:
+
+        //     return {
+        //         ...state,
+        //         products: payload.data,
+        //         edited: payload.edited
+        //     }
+        case UPDATE_PRODUCTS:
+            
+            return {
+                ...state,
+                error: payload.error,
+                edited: !payload.error,
+                productsPagination: payload.productsPagination,
+                products: payload.products,
+            }
         case RESET:
 
             return {
@@ -85,7 +105,8 @@ function productos(state = defaultState, action) {
                 error: false,
                 edit: {},
                 edited: false,
-                saved: false
+                saved: false,
+                deleted: false
             }
 
         case ERROR:
@@ -115,6 +136,13 @@ function productos(state = defaultState, action) {
             return {
                 ...state,
                 maxItems: payload
+            }
+
+        case ERROR:
+
+            return {
+                ...state,
+                ...payload
             }
         default:
             return state;

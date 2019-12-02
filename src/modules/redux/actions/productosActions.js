@@ -3,11 +3,13 @@ import {
     GET_PRODUCTS,
     GET_PRODUCT,
     DELETE_PRODUCT,
+    UPDATE_PRODUCTS,
     SET_PRODUCTS,
+    SET_PRODUCT,
     RESET,
     SET_PAGINATION_PAGE,
-    SET_PAGINATION_MAX_PAGES,
-    SET_PAGINATION_MAX_ITEMS
+    // SET_PAGINATION_MAX_PAGES,
+    // SET_PAGINATION_MAX_ITEMS
 } from '../types';
 
 import * as product from 'modules/utils/storage/storage';
@@ -36,11 +38,18 @@ function setProduct(o) {
     if (!product.setProduct(o)) {
 
         return {
-            type: 'ERROR'
+            type: 'ERROR',
+            payload: {error: false}
         }
     } 
 
-    return getProducts();
+    const products = product.getProducts();
+
+    return {
+        type: SET_PRODUCTS,
+        payload: {data: products, error: false}
+        
+    }
 }
 
 function getProducts() {
@@ -88,25 +97,73 @@ function deleteProduct(id) {
         }
 
         let productsPagination = products.slice(currentPage * maxItems, maxItems);
-        console.log(productsPagination)
+        
         dispatch( {
             type: DELETE_PRODUCT,
             payload: {
                 page: currentPage,
                 productsPagination,
-                maxPages
+                products,
+                maxPages,
+                deleted: true
             }
         })
     }
 }
+
+function getProduct(id) {
+    const products = product.getProduct(id);
+
+    return {
+        type: GET_PRODUCT,
+        payload: {data: products}
+    }
+}
+
+function updateProduct(o) {
+
+    if (product.updateProduct(o)) {
+        return (dispatch, getState) => {
+            let productsStore = getState().products;
+            let { maxItems, page } = productsStore;
+            let products = product.getProducts();
+            let productsPagination = products.slice(page * maxItems, maxItems);
+
+            dispatch({
+                type: UPDATE_PRODUCTS,
+                payload: {
+                    productsPagination,
+                    products,
+                    error: false
+                }
+            })
+        }        
+    }
+
+    return {
+        type: UPDATE_PRODUCTS,
+        payload: {
+            error: !false
+        }
+    }
+
+}
+
+function reset() {
+
+    return {
+        type: RESET
+    }
+}
+
 export {
     initPagination,
     setProduct,
-    // updateProduct,
+    updateProduct,
     getProducts,
-    // getProduct,
+    getProduct,
     deleteProduct,
-    // reset,
+    reset,
     setPaginationPage,
     // setPaginationMaxPages,
     // setPaginationMaxItems

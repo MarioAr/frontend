@@ -143,8 +143,9 @@ class ProductForm extends Component {
     reader.onload = () => this.setState({images: [...this.state.images, reader.result]});
     reader.onerror = error => console.log(error);
   }
+
   render() {
-    const { id, description, name, price, stock, promotionalPrice, images, inputValidation } = this.state;
+    const { id, description, name, price, stock, promotionalPrice, images, inputValidation } = this.props;
     
 	if (this.props.error) {
 		alert("Ops!");
@@ -195,7 +196,7 @@ class ProductForm extends Component {
         </Grid>
 
         <Grid transparent nopadding className="mt--lg">
-          {this.renderActionButtons}Pagination
+          {this.renderActionButtons}
         </Grid>
       </div>
     )

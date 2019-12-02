@@ -19,6 +19,12 @@ class Dropzone extends PureComponent {
     })
   }
 
+  componentDidUpdate(newProps) {
+    this.setState({
+      imageBase64: newProps.value
+    })
+  }
+
   onDropHandler = (files) => {
     // Refact - need to implement this
     console.log(files);
@@ -26,8 +32,10 @@ class Dropzone extends PureComponent {
 
   render() {
     // Refact - need to implement this
+    // console.log(this.props)
     const { imageBase64 } = this.state;
     const { className, onDrop, style, ...props } = this.props;
+    // const { className, onDrop, style, value } = this.props;
     const classComponent = classname('dropzone', className,{
       'dropzone--filled': (isEmpty(imageBase64))
     });    

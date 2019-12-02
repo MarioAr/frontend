@@ -11,16 +11,16 @@ class Breadcumbs extends Component {
   mountBreadcumb() {
     const breadcumbs = [];
     let data = window.location.pathname;
-
+    let getRoute = item => {
+      const info = {
+        exact: true,
+        path: '/tiendanube' + item.path
+      };
+      return matchPath(data, info);
+    }
     while(data !== '') {
       
-      const route = Routes.find(item => {
-        const info = {
-          exact: true,
-          path: '/tiendanube' + item.path
-        };
-        return matchPath(data, info);
-      });
+      const route = Routes.find(getRoute);
       if(!isEmpty(route)) {
         let comp;
         if (data !== window.location.pathname) {

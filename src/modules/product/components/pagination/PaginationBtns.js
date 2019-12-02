@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import { Grid } from 'components/grid';
-import { Dropzone } from 'components/dropzone';
-import { InputGroup, Editor, InputGroupCurrencyIcon } from 'components/input';
+// import { Grid } from 'components/grid';
+// import { Dropzone } from 'components/dropzone';
+// import { InputGroup, Editor, InputGroupCurrencyIcon } from 'components/input';
 import { Button } from 'components/button';
 import PropTypes from 'prop-types';
 

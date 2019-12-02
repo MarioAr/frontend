@@ -42,14 +42,15 @@ function setProduct(product) {
     try {
         products = getProducts();
         
-        products.push(product);
-    
+        
+        products.unshift(product);
+        
         localStorage.setItem(PRODUCTS, JSON.stringify(products));
 
         return true;
 
     } catch (error) {
-    
+        console.log(error.toString())
         return false;
     }
 }
@@ -62,17 +63,17 @@ function deleteProduct(id) {
     // VALIDAR ID
     try {
         let products = getProducts();
-
+        
         // let productsReduce = products.reduce(product => product.id != id);
         let productsReduce = products.filter(product => {
-            console.log(product, id)
-            return product.id != id;
+            // console.log(product, id)
+            return product.id !== id;
         });
 
         if (products.length === productsReduce.length) {
             return false;
         }
-
+        
         localStorage.setItem(PRODUCTS, JSON.stringify(productsReduce));
 
         return true;
@@ -92,12 +93,23 @@ function updateProduct(product) {
         return false;
     }
 
-    if (deleteProduct(product.id)) {
-        setProduct(product);
-        return true;
-    }
+    try {
+        let products = getProducts();
 
-    return false;
+        products = products.map(item => {
+            if (item.id === product.id) {
+                return product;
+            }
+
+            return item;
+        });
+
+        localStorage.setItem(PRODUCTS, JSON.stringify(products));
+
+        return true;
+    } catch (error) {
+        return false;
+    }
 }
 
 

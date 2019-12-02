@@ -24,7 +24,7 @@ class Sidebar extends Component {
       <div className={classComponent}>
         <div className="sidebar--header">
           <div className="store--info">
-            <img src={storeLogo} height="40"/>
+            <img src={storeLogo} height="40" alt=""/>
             <div>
               <div className="title">{storeName}</div>
               <div className="user">{userName}</div>
