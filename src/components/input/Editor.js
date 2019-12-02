@@ -26,7 +26,7 @@ class Editor extends Component {
     onChange(name, value);
   }
 
-  componentWillReceiveProps(newProps){
+  UNSAFE_componentWillReceiveProps(newProps){
     if(this.props.value === '') {
       this.setState({
         editorState: this.htmlValue(newProps.value)

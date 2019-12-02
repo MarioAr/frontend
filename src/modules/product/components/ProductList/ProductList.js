@@ -43,7 +43,7 @@ class ProductList extends Component {
 	}
 
 	render() {
-		let { products, productsPagination, deleted } = this.props;
+		let { products, productsPagination } = this.props;
 		
 		return (
 			<div>

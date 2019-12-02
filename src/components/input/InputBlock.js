@@ -6,7 +6,9 @@ class InputBlock extends Component {
     type: "text"
   }
   render() {
-    const { label, placeholder, className, name, type, onChange, value, children, validate, ...props } = this.props;
+    
+    const { label, className, name, children, validate } = this.props;
+    // const { label, placeholder, className, name, type, onChange, value, children, validate, ...props } = this.props;
     let error = false;
     if(validate) {
       error = validate[name];      

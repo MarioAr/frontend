@@ -5,7 +5,7 @@ import {
     DELETE_PRODUCT,
     UPDATE_PRODUCTS,
     SET_PRODUCTS,
-    SET_PRODUCT,
+    // SET_PRODUCT,
     RESET,
     SET_PAGINATION_PAGE,
     // SET_PAGINATION_MAX_PAGES,
@@ -92,7 +92,7 @@ function deleteProduct(id) {
 
         let maxPages = Math.ceil(products.length / (maxItems)) - 1;
 
-        if (maxPages < page) {
+        if (maxPages < page && page !== 0) {
             currentPage = page - 1;
         }
 
@@ -129,7 +129,7 @@ function updateProduct(o) {
             let products = product.getProducts();
             let productsPagination = products.slice(page * maxItems, maxItems);
 
-            dispatch({
+            return dispatch({
                 type: UPDATE_PRODUCTS,
                 payload: {
                     productsPagination,

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class LayoutRoute extends Component {
   static propTypes = {
     path: PropTypes.string,
-    Component: PropTypes.func,
+    Component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
     Layout: PropTypes.func
   }
 

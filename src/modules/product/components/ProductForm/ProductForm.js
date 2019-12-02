@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import  { connect } from 'react-redux';
 import { products } from 'modules/redux/actions/';
 import { generateId } from '../../helper';
-
+import { Redirect} from 'react-router-dom'
 import ProductFormView from './ProductFormView';
 
 class ProductForm extends Component {
@@ -42,6 +42,7 @@ class ProductForm extends Component {
     update = prod => {
         
         this.props.dispatch(products.updateProduct(prod));
+        
     }
 
     onDelete = id => {
@@ -55,7 +56,7 @@ class ProductForm extends Component {
         const { edit, edited, error } = this.props;
 
         if (edited) {
-            this.props.history.push('/products');
+            return <Redirect to="/products" />
         }
 
         if (error) {
@@ -66,7 +67,7 @@ class ProductForm extends Component {
         
         return (
             <div>
-                <ProductFormView {...this.props} inputValidation={null} edit={edit} 
+                <ProductFormView {...this.props} edit={edit} 
                     update={params.id}
                     backToListing={this.backToListing}
                     onUpdate={this.update}
@@ -78,7 +79,9 @@ class ProductForm extends Component {
     }
 }
 
-
+// function mapStateToProps(state) {
+//   return { products: state.products }
+// }
 export default connect(
     state => state.products
 )(ProductForm);

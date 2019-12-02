@@ -4,7 +4,7 @@ import {
         DELETE_PRODUCT,
         GET_PRODUCT,
         SET_PRODUCTS,
-        SET_PRODUCT,
+        // SET_PRODUCT,
         UPDATE_PRODUCTS,
         RESET,
         ERROR,
@@ -109,12 +109,12 @@ function productos(state = defaultState, action) {
                 deleted: false
             }
 
-        case ERROR:
+        // case ERROR:
 
-            return {
-                ...state,
-                error: true
-            }
+        //     return {
+        //         ...state,
+        //         error: true
+        //     }
 
         case SET_PAGINATION_PAGE:
             let { page } = payload;
@@ -142,7 +142,8 @@ function productos(state = defaultState, action) {
 
             return {
                 ...state,
-                ...payload
+                ...payload,
+                error: true
             }
         default:
             return state;

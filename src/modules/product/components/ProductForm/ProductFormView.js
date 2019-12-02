@@ -187,12 +187,12 @@ class ProductForm extends Component {
 }
 
 ProductForm.propTypes = {
-    inputValidation: {
-            name: PropTypes.boolean,
-            description: PropTypes.boolean,
-            price: PropTypes.boolean,
-            stock: PropTypes.boolean
-        },
+    // inputValidation: {
+    //         name: PropTypes.boolean,
+    //         description: PropTypes.boolean,
+    //         price: PropTypes.boolean,
+    //         stock: PropTypes.boolean
+    //     },
         images: PropTypes.array,
         name: PropTypes.string,
         description: PropTypes.string,
