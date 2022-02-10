@@ -10,7 +10,7 @@
     "draftjs-to-html": "^0.8.4",
     "history": "^4.1.0",
     "lodash": "^4.17.10",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "normalize.css": "^8.0.0",
     "prop-types": "15.6.1",
     "react": "^16.9.0",
